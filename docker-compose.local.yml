@@ -1,0 +1,53 @@
+version: '3.11'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./backend/.env
+    expose:
+      - 5432
+    networks:
+      - local-app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/local/Dockerfile
+      args:
+        ARCH: ${ARCH}
+    container_name: backend
+    volumes:
+      - ./backend/:/backend/
+    env_file:
+      - ./backend/.env
+    ports:
+      - 8000:8000
+    depends_on:
+       - db
+    networks:
+      - local-app-network
+    command: /start
+  
+  frontend:
+    image: node:18.17-alpine
+    working_dir: /frontend
+    ports:
+      - 4200:4200
+    container_name: frontend
+    volumes:
+      - ./frontend:/frontend
+    networks:
+      - local-app-network
+    depends_on:
+      - server
+    command: npm start
+
+networks:
+  local-app-network:
+
+volumes:
+  postgres_data:

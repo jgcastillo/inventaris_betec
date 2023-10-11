@@ -1,0 +1,21 @@
+version: '3.11'
+
+services:
+  server_staging:
+    build:
+      context: .
+      dockerfile: ./docker/staging/Dockerfile
+    volumes:
+      - ./backend/:/backend/
+    env_file:
+      - ./backend/.envs/.staging/.env
+    ports:
+      - 8030:8030
+    networks:
+      - staging-app-network
+    restart: always
+    command: /start
+
+networks:
+  staging-app-network:
+    driver: bridge

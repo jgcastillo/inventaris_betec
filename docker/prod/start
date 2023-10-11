@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -o errexit
+set -o nounset
+
+uvicorn shared.core.server:app --workers 5 --host 0.0.0.0 --port 8030 --timeout-keep-alive 300 --forwarded-allow-ips="*"

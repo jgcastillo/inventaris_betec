@@ -1,0 +1,21 @@
+version: '3.11'
+
+services:
+  server_test:
+    build:
+      context: .
+      dockerfile: ./docker/test/Dockerfile
+    volumes:
+      - ./backend/:/backend/
+    env_file:
+      - ./backend/.envs/.test/.env
+    ports:
+      - 8005:8000
+    networks:
+      - valimai-backend_test-app-network
+    restart: always
+    command: /start
+
+networks:
+  valimai-backend_test-app-network:
+    external: true

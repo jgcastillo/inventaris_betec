@@ -1,0 +1,44 @@
+version: '3.11'
+
+services:
+  server_prod:
+    logging:
+      options:
+        awslogs-stream: akonomy-backend-prod
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile
+    volumes:
+      - ./backend/:/backend/
+    env_file:
+      - ./backend/.envs/.prod/.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.server_prod.rule=(Host(`sav-backend.venedigital.com`))"
+      - "traefik.http.routers.server_prod.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=valimai-backend_prod-app-network"
+      - "traefik.http.routers.server_prod.entrypoints=websecure"
+      - "traefik.http.services.server_prod.loadbalancer.server.port=8010"
+    networks:
+      - akonomy-backend_prod-app-network
+    restart: always
+    command: /start
+
+  # celery_worker:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/prod/Dockerfile
+  #   image: afiliasi_celery_worker
+  #   command: /start-celeryworker
+  #   volumes:
+  #     - ./backend/:/backend/
+  #   env_file:
+  #     - ./backend/.envs/.prod/.env
+  #   depends_on:
+  #     - server_prod
+  #   networks:
+  #     - valimai-backend_prod-app-network
+
+networks:
+  akonomy-backend_prod-app-network:
+    external: true

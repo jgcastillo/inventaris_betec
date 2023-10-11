@@ -1,0 +1,46 @@
+# app
+fastapi==0.97.0
+uvicorn[standard]==0.22.0
+pydantic==1.10.9
+email-validator==2.0.0.post2
+python-multipart==0.0.6
+python-dateutil==2.8.2
+
+#db
+databases[postgresql]==0.7.0
+psycopg2-binary==2.9.6
+SQLAlchemy==1.4.48
+alembic==1.11.1
+pytz==2023.3
+
+#auth
+PyJWT==2.7.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+cryptography==41.0.1
+pycryptodome==3.18.0
+sendgrid==6.10.0
+jinja2==3.1.2
+
+#logging
+icecream==2.1.3
+loguru==0.7.0
+
+#tests
+pytest==7.3.2
+pytest-asyncio==0.21.0
+httpx==0.24.0
+asgi-lifespan==2.1.0
+requests==2.31.0
+
+# lintint
+black==23.3.0
+isort==5.12.0
+mypy==1.3.0
+
+# validator
+pandas==2.0.2
+boto3==1.26.155
+xlsxwriter==3.1.2
+openpyxl==3.1.2
+aiofiles==22.1.0
